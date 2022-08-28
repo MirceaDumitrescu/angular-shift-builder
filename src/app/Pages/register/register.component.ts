@@ -1,3 +1,4 @@
+import { EncrDecrService } from './../../Services/encr-decr.service';
 import { Component, OnInit } from '@angular/core';
 import { StorageService } from 'src/app/Services/storage.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -24,8 +25,13 @@ export class RegisterComponent implements OnInit {
     this.storageService.setLocalStorageUserData(user, data);
   }
 
+  encryptPassword(password: string) {
+    return this.encrypt.encrypt('123456$#@$^@1ERF', password);
+  }
+
   constructor(
     private storageService: StorageService,
+    private encrypt: EncrDecrService,
     private fb: FormBuilder,
     private router: Router
   ) {}
@@ -108,7 +114,7 @@ export class RegisterComponent implements OnInit {
       {
         username: myForm.username,
         email: myForm.email,
-        password: myForm.password,
+        password: this.encryptPassword(myForm.password),
         phone: myForm.phone,
         role: myForm.role,
         firstName: myForm.firstName,
@@ -119,7 +125,6 @@ export class RegisterComponent implements OnInit {
     this.success = true;
     alert('Registration successful');
     console.log('success', this.userData);
-    //redirect me to login
     this.router.navigate(['/login']);
   }
 }

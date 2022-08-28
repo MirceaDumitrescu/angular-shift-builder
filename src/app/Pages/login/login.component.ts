@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { StorageService } from 'src/app/Services/storage.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { EncrDecrService } from 'src/app/Services/encr-decr.service';
 
 @Component({
   selector: 'app-login',
@@ -17,10 +18,15 @@ export class LoginComponent implements OnInit {
     this.userData = this.storageService.getLocalStorageUserData(user);
   }
 
+  private decryptPassword(password: string):string {
+    return this.decrypt.decrypt('123456$#@$^@1ERF', password);
+  }
+
   constructor(
     private storageService: StorageService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private decrypt: EncrDecrService
   ) {}
 
   ngOnInit(): void {
@@ -34,7 +40,7 @@ export class LoginComponent implements OnInit {
     const loginForm = this.loginForm.value;
     this.getUserData(loginForm.email);
 
-    if ( this.userData?.password === loginForm.password ) {
+    if ( this.decryptPassword(this.userData?.password) === loginForm.password ) {
       this.error = '';
       this.createToken();
       this.router.navigate(['/']);

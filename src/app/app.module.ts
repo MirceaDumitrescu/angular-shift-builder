@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AuthService } from './Services/auth.service';
 import { AuthGuardService } from './Services/auth-guard.service';
+import { EncrDecrService } from './Services/encr-decr.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -53,7 +54,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatFormFieldModule,
     MatDatepickerModule
   ],
-  providers: [StorageService, AuthService, AuthGuardService],
+  providers: [StorageService, AuthService, AuthGuardService , EncrDecrService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

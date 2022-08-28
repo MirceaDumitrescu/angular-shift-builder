@@ -6,8 +6,8 @@ import { Injectable } from '@angular/core';
 
 export class StorageService {
 
-  private localStorageUserData: any;
-  private localStorageShiftData: any;
+  private localStorageUserData: UserData;
+  private localStorageShiftData: UserShift;
 
   public getLocalStorageUserData(user: string):UserData {
     this.localStorageUserData = JSON.parse(localStorage.getItem(user) || '{}');
@@ -20,12 +20,12 @@ export class StorageService {
   }
 
   public getLocalStorageUserShifts():UserShift {
-    return this.localStorageShiftData.shifts;
+    return this.localStorageShiftData;
   }
 
-  public setLocalStorageUserShifts(data: UserShift):void {
-    this.localStorageShiftData.shifts.push(data);
-    localStorage.setItem('userData', JSON.stringify(this.localStorageUserData));
+  public setLocalStorageUserShifts(user: string, data: UserShift):void {
+    this.localStorageShiftData = data;
+    localStorage.setItem(user, JSON.stringify(data));
   }
 
 
