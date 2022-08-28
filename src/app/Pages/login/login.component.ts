@@ -22,6 +22,10 @@ export class LoginComponent implements OnInit {
     return this.decrypt.decrypt('123456$#@$^@1ERF', password);
   }
 
+  private setLoggedInUser(user: string):void {
+    this.storageService.setLoggedInUser(user);
+  }
+
   constructor(
     private storageService: StorageService,
     private fb: FormBuilder,
@@ -31,7 +35,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email, Validators.minLength(6)]],
       password: ['', [Validators.required]],
     });
   }
@@ -40,9 +44,15 @@ export class LoginComponent implements OnInit {
     const loginForm = this.loginForm.value;
     this.getUserData(loginForm.email);
 
+    if (!this.userData?.email) {
+      this.error = 'Email not found';
+      return;
+    }
+
     if ( this.decryptPassword(this.userData?.password) === loginForm.password ) {
       this.error = '';
       this.createToken();
+      this.setLoggedInUser(loginForm.email);
       this.router.navigate(['/']);
     } else {
       this.error = 'Invalid credentials';

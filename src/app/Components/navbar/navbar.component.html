@@ -4,6 +4,8 @@
         <a routerLink="/" class='menu-link'>Home</a>
         <a routerLink="/dashboard" class='menu-link'>Dashboard</a>
         <a routerLink="/profile" class='menu-link'>Profile</a>
-        <a routerLink="/contact" class='menu-link'>Logout</a>
+        <a routerLink="/register" class='menu-link'>Register</a>
+        <a *ngIf='!loggedInUser' routerLink="/login" class='menu-link'>Login</a>
+        <a *ngIf='loggedInUser' (click)='logout()' class='menu-link logout'>Logout {{ loggedInUser }}</a>
     </div>
 </nav>

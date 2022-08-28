@@ -6,6 +6,8 @@ import { RegisterComponent } from './Pages/register/register.component';
 import { DashboardComponent } from './Pages/dashboard/dashboard.component';
 import { AddShiftComponent } from './Pages/add-shift/add-shift.component';
 import { AuthGuardService as AuthGuard } from './Services/auth-guard.service';
+import { ForgotPasswordComponent } from './Pages/forgot-password/forgot-password.component';
+import { ErrorPageComponent } from './Pages/error-page/error-page.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -13,7 +15,8 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'add-shift', component: AddShiftComponent, canActivate: [AuthGuard] },
-  { path: '**', redirectTo: '' }
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: '**', component: ErrorPageComponent },
 ];
 
 @NgModule({

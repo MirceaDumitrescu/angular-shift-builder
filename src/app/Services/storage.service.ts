@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,9 @@ export class StorageService {
 
   private localStorageUserData: UserData;
   private localStorageShiftData: UserShift;
+  private userAuthData = new BehaviorSubject<string>('');
+  loggedUser = this.userAuthData.asObservable();
+
 
   public getLocalStorageUserData(user: string):UserData {
     this.localStorageUserData = JSON.parse(localStorage.getItem(user) || '{}');
@@ -28,6 +32,10 @@ export class StorageService {
     localStorage.setItem(user, JSON.stringify(data));
   }
 
+  public setLoggedInUser(user: string):void {
+    this.userAuthData.next(user);
+    localStorage.setItem('loggedInUser', user);
+  }
 
   constructor() { }
 }

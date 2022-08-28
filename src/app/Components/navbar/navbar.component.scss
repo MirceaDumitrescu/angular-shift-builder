@@ -11,6 +11,9 @@ nav {
     .menu-links {
         display: flex;
         align-items: center;
+        .logout {
+            cursor: pointer;
+        }
         .menu-link {
             font-size: 1.2rem;
             text-decoration: none;

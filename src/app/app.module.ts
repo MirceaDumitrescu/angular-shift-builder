@@ -28,6 +28,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NavbarComponent } from './Components/navbar/navbar.component';
+import { ForgotPasswordComponent } from './Pages/forgot-password/forgot-password.component';
+import { ErrorPageComponent } from './Pages/error-page/error-page.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -37,7 +40,9 @@ import { NavbarComponent } from './Components/navbar/navbar.component';
     RegisterComponent,
     DashboardComponent,
     AddShiftComponent,
-    NavbarComponent
+    NavbarComponent,
+    ForgotPasswordComponent,
+    ErrorPageComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +59,8 @@ import { NavbarComponent } from './Components/navbar/navbar.component';
     MatSortModule,
     MatDialogModule,
     MatFormFieldModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatProgressSpinnerModule
   ],
   providers: [StorageService, AuthService, AuthGuardService , EncrDecrService],
   bootstrap: [AppComponent]

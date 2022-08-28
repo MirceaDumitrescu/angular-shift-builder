@@ -1,0 +1,13 @@
+.error-page__wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 100px 0px;
+    h1 {
+        font-size: 10rem;
+        font-weight: bold;
+        text-decoration: none;
+        padding: 50px;
+    }
+}
