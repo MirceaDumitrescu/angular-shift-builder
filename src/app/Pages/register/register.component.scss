@@ -1,0 +1,11 @@
+.register-form__form {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    justify-content: center;
+    .register-input {
+        margin-bottom: 40px;
+        border: 1px solid black;
+    }
+}
+

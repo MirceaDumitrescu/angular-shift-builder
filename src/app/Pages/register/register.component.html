@@ -1,0 +1,60 @@
+<section class="register-form">
+  <form
+    action=""
+    class="register-form__form"
+    [formGroup]="registerForm"
+    (ngSubmit)="submitHandler()"
+  >
+    <mat-form-field class="register-input">
+      <input matInput placeholder="username" formControlName="username" />
+      <mat-error *ngIf="username?.invalid && username?.touched">
+        Name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="register-input">
+      <input matInput placeholder="email" formControlName="email" />
+      <mat-error *ngIf="email?.invalid && email?.touched">
+        Email is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="register-input">
+      <input
+        matInput
+        placeholder="password"
+        formControlName="password"
+        type="password"
+      />
+
+      <mat-hint class="hint" align="end">
+        Must have letters numbers and symbols</mat-hint
+      >
+
+      <mat-error *ngIf="password?.invalid && password?.touched">
+        Password is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="register-input">
+      <input
+        matInput
+        placeholder="confirm password"
+        formControlName="confirmPassword"
+        type="password"
+      />
+      <mat-error *ngIf="confirmPassword?.invalid && confirmPassword?.touched">
+        Confirm password is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!registerForm.valid"
+    >
+      Register
+    </button>
+  </form>
+</section>
