@@ -1,0 +1,12 @@
+.search-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    mat-form-field {
+        padding: 1rem;
+        width: 400px;
+    }
+
+}
