@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
-  providers: [StorageService],
 })
 export class RegisterComponent implements OnInit {
   userData: any = {};
@@ -17,11 +16,11 @@ export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup;
 
-  getUserData(user: UserEmail) {
+  getUserData(user: string) {
     this.userData = this.storageService.getLocalStorageUserData(user);
   }
 
-  setUserData(user: UserEmail, data: UserData) {
+  setUserData(user: string, data: UserData) {
     this.storageService.setLocalStorageUserData(user, data);
   }
 
@@ -105,7 +104,7 @@ export class RegisterComponent implements OnInit {
     }
 
     this.setUserData(
-      { email: myForm.email },
+      myForm.email,
       {
         username: myForm.username,
         email: myForm.email,

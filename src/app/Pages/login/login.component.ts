@@ -7,14 +7,13 @@ import { Router } from '@angular/router';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  providers: [StorageService],
 })
 export class LoginComponent implements OnInit {
   userData: any = {};
   loginForm: FormGroup;
   error: string = '';
 
-  getUserData(user: UserEmail) {
+  private getUserData(user: string):void {
     this.userData = this.storageService.getLocalStorageUserData(user);
   }
 
@@ -31,16 +30,23 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  async submit() {
+  async submit():Promise<void> {
     const loginForm = this.loginForm.value;
-    this.userData = JSON.parse(localStorage.getItem(loginForm.email) || '{}');
+    this.getUserData(loginForm.email);
 
     if ( this.userData?.password === loginForm.password ) {
       this.error = '';
+      this.createToken();
       this.router.navigate(['/']);
     } else {
       this.error = 'Invalid credentials';
     }
 
   }
+
+  private createToken():void {
+    const token = 'auth-token';
+    this.storageService.setLocalStorageUserData(token, this.userData);
+  }
+
 }

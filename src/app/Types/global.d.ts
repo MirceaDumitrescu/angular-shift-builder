@@ -21,8 +21,4 @@ declare global {
         shiftHours: number,
         shiftTotal: number,
       };
-
-      type UserEmail = {
-        email: string
-      }
 }
