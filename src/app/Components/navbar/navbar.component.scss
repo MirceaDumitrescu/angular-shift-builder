@@ -1,0 +1,23 @@
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    .logo-website {
+        font-size: 2rem;
+        font-weight: bold;
+        text-decoration: none;
+    }
+    .menu-links {
+        display: flex;
+        align-items: center;
+        .menu-link {
+            font-size: 1.2rem;
+            text-decoration: none;
+            margin-right: 20px;
+            &:hover {
+                color: #ffc107;
+            }
+        }
+    }
+}

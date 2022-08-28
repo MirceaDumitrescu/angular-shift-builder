@@ -3,9 +3,10 @@
     flex-flow: column wrap;
     align-items: center;
     justify-content: center;
+    padding: 100px;
     .register-input {
         margin-bottom: 40px;
-        border: 1px solid black;
+        width: 400px;
     }
 }
 

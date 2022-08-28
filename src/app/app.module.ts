@@ -27,6 +27,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { NavbarComponent } from './Components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     LoginComponent,
     RegisterComponent,
     DashboardComponent,
-    AddShiftComponent
+    AddShiftComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
