@@ -14,6 +14,7 @@ export class HomeComponent implements OnInit {
   private loggedInUser: string;
   private localStorageShifts: any;
   private isUserAdmin: boolean = false;
+  private dateRange: any;
 
   private getLocalShiftStorage(): void {
     this.localStorageShifts = this.storage.getLocalStorageUserShifts();
@@ -35,11 +36,19 @@ export class HomeComponent implements OnInit {
 
     this.applyFilter(this.searchWord);
 
-    this.search.searchWordChange.subscribe((searchWord: string) => {
+    this.search.searchWordChange.subscribe((searchWord: string): void => {
       if (this.searchWord != searchWord) {
         this.applyFilter(searchWord);
       }
       this.searchWord = searchWord;
+    });
+
+    this.search.searchDateInterval.subscribe((dateRange: any): void => {
+      if (this.dateRange != dateRange) {
+        this.applyFilter(this.searchWord, dateRange);
+      }
+
+      this.dateRange = dateRange;
     });
 
     if (!this.loggedInUser) {
@@ -65,9 +74,28 @@ export class HomeComponent implements OnInit {
     }
   }
   @Debounce(500)
-  public applyFilter(filter: string) {
-    this.shiftDb = this.localStorageShifts.filter((shift: UserShift) =>
+  public applyFilter(filter: string, dateRange: any = null) {
+    let data = this.localStorageShifts.filter((shift: UserShift) =>
       shift.shiftSlug.includes(filter)
     );
+
+    if (dateRange.from && dateRange.to) {
+
+      this.shiftDb = data.filter((shift: UserShift) => {
+        const interval = {
+          from: new Date(shift.shiftStartTime),
+          to: new Date(shift.shiftEndTime),
+        };
+
+        console.log(interval.from >= dateRange.from)
+
+        if (interval.from >= dateRange.from && interval.to <= dateRange.to) {
+          return true;
+        }
+        return false;
+      });
+    } else {
+      this.shiftDb = data;
+    }
   }
 }

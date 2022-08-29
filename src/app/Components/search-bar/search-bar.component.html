@@ -1,24 +1,49 @@
-<div class='search-wrapper'>
-
-<mat-form-field >
-  <input
-    matInput
-    (input)="applyFilter($event)"
-    placeholder="Search by shift name"
-    class='search-bar'
-    [(ngModel)]="searchTerm"
-  />
-</mat-form-field>
-
-<mat-form-field appearance="fill">
-    <mat-label>Enter a date range</mat-label>
-    <mat-date-range-input [rangePicker]="picker">
-    <input matStartDate placeholder="Start date">
-    <input matEndDate placeholder="End date">
-    </mat-date-range-input>
-    <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-date-range-picker #picker></mat-date-range-picker>
-</mat-form-field>
-
+<div class="search-wrapper">
+  <mat-form-field>
+    <input
+      matInput
+      (input)="applyFilter($event)"
+      placeholder="Search by shift name"
+      class="search-bar"
+      [(ngModel)]="searchTerm"
+    />
+  </mat-form-field>
+  <form
+    action=""
+    class="add-shift-form"
+    [formGroup]="dateRangeForm"
+    (ngSubmit)="submitHandler()"
+  >
+    <mat-form-field appearance="fill">
+      <mat-label>Enter a date range</mat-label>
+      <mat-date-range-input [rangePicker]="picker">
+        <input
+          matStartDate
+          placeholder="Start date"
+          formControlName="startDate"
+        />
+        <input matEndDate placeholder="End date" formControlName="endDate" />
+      </mat-date-range-input>
+      <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field>
+    <p *ngIf="error" class="error">{{ error }}</p>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!dateRangeForm.valid"
+    >
+      Search
+    </button>
+    <button
+    mat-raised-button
+    color="secondary"
+    type="submit"
+    (click)="clearFilter()"
+  >
+    Reset
+  </button>
+  </form>
 </div>
