@@ -1,5 +1,5 @@
-import { Component, Injectable, OnDestroy } from '@angular/core';
-import { Subject, Observable, of, BehaviorSubject } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { switchMap, debounceTime, shareReplay, delay } from 'rxjs/operators';
 
 @Injectable({
