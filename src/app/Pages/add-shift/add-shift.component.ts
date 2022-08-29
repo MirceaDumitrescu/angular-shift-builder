@@ -8,12 +8,15 @@ import { Router } from "@angular/router";
   styleUrls: ["./add-shift.component.scss"],
 })
 export class AddShiftComponent implements OnInit {
-  userData: UserData;
-  userShift: UserShift;
-  shiftDb: any;
-  loggedInUser: string;
+  public userData: UserData;
+  public userShift: UserShift;
+  private shiftDb: any;
+  private loggedInUser: string;
+  public error: string = "";
 
-  shiftForm: FormGroup;
+  public shiftForm: FormGroup;
+
+  private today: Date = new Date();
 
   private getUserData(user: string) {
     this.userData = this.storageService.getLocalStorageUserData(user);
@@ -49,10 +52,10 @@ export class AddShiftComponent implements OnInit {
       shiftSlug: ["", [Validators.required, Validators.minLength(3)]],
       shiftStartTime: ["", [Validators.required]],
       shiftEndTime: ["", [Validators.required]],
-      shiftDate: [new Date()],
-      hourlyRate: ["", [Validators.required, Validators.min(0)]],
-      workplace: ["", [Validators.required]],
-      shiftDescription: ["", [Validators.required]],
+      shiftDate: [this.today],
+      hourlyRate: ["", [Validators.required, Validators.min(0), Validators.pattern("^[0-9]*$")]],
+      workplace: ["", [Validators.required, Validators.minLength(3)]],
+      shiftDescription: ["", [Validators.required, Validators.minLength(10)]],
     });
   }
 
@@ -81,14 +84,45 @@ export class AddShiftComponent implements OnInit {
   submitHandler() {
     const form = this.shiftForm.value;
 
-    if ( !this.shiftDb ) {
+    if (!this.shiftDb) {
       this.shiftDb = JSON.parse(localStorage.getItem("shifts") || "");
+    }
+
+    //check if the shift interval overlaps an existing shift
+    const startingDate = new Date(form.shiftStartTime);
+    const endingDate = new Date(form.shiftEndTime);
+
+    const overlappingShift = this.shiftDb.find((shift: UserShift) => {
+      const shiftInterval = {
+        startingDate: new Date(shift.shiftStartTime),
+        endingDate: new Date(shift.shiftEndTime),
+      };
+
+      if (
+        (shiftInterval.startingDate >= startingDate &&
+          shiftInterval.startingDate <= endingDate) ||
+        (shiftInterval.endingDate >= startingDate &&
+          shiftInterval.endingDate <= endingDate)
+      ) {
+        return true;
+      }
+      return false;
+    });
+
+    if (overlappingShift) {
+      this.error = `Shift interval overlaps with ${
+        overlappingShift.shiftSlug
+      } from ${new Date(overlappingShift.shiftStartTime).toLocaleDateString(
+        "en-US"
+      )} to ${new Date(overlappingShift.shiftEndTime).toLocaleDateString(
+        "en-US"
+      )}`;
+      return;
     }
 
     this.shiftDb.push(form);
     this.setShiftData(this.shiftDb);
-
-
+    this.error = "";
     alert("Shift Added Successfully");
     this.router.navigate(["/"]);
   }

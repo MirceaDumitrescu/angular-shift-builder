@@ -37,7 +37,7 @@
     <mat-form-field class="shift-rate-input">
       <input matInput placeholder="shift-rate" formControlName="hourlyRate" />
       <mat-error *ngIf="hourlyRate?.invalid && hourlyRate?.touched">
-        Shift rate is <strong>required</strong>
+        Shift rate is <strong>required</strong> and must be a number
       </mat-error>
     </mat-form-field>
 
@@ -62,6 +62,10 @@
         Shift description is <strong>required</strong>
       </mat-error>
     </mat-form-field>
+
+    <p *ngIf='error' class='error'>{{error}}</p>
+
+
     <button
       mat-raised-button
       color="primary"
