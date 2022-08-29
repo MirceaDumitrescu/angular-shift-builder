@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SearchFiltersService } from 'src/app/Services/search-filters.service';
 
 @Component({
   selector: 'app-search-bar',
@@ -9,13 +10,15 @@ export class SearchBarComponent implements OnInit {
 
   public searchTerm: string;
 
-  constructor() { }
+  constructor(
+    private search: SearchFiltersService
+  ) { }
 
   ngOnInit(): void {
   }
 
   public applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    console.log(filterValue);
+    this.search.setWord(filterValue);
   }
 }

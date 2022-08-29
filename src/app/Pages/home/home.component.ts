@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { SearchFiltersService } from './../../Services/search-filters.service';
+import { Component, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
 import { StorageService } from 'src/app/Services/storage.service';
 
 @Component({
@@ -8,10 +9,11 @@ import { StorageService } from 'src/app/Services/storage.service';
 })
 export class HomeComponent implements OnInit {
 
-  localStorageShifts: any;
-  shiftDb: any;
-  loggedInUser: string;
-  isUserAdmin: boolean = false;
+  public searchWord: string;
+  public shiftDb: any;
+  private loggedInUser: string;
+  private localStorageShifts: any;
+  private isUserAdmin: boolean = false;
 
   private getLocalShiftStorage():void {
     this.localStorageShifts = this.storage.getLocalStorageUserShifts();
@@ -21,12 +23,22 @@ export class HomeComponent implements OnInit {
     this.shiftDb = data.filter((shift: UserShift) => shift.user === this.loggedInUser);
   }
 
-  constructor( private storage: StorageService ) { }
+  constructor( private storage: StorageService, private search: SearchFiltersService ) {}
+
 
   ngOnInit(): void {
-    this.storage.loggedUser.subscribe(user => this.loggedInUser = user);
-    this.storage.loggedUserIsAdmin.subscribe(value => this.isUserAdmin = value);
     this.getLocalShiftStorage();
+
+    this.search.searchWordChange.subscribe((searchWord: string) => {
+      if ( !searchWord ) return;
+
+
+      if ( this.searchWord != searchWord ) {
+        this.applyFilter(searchWord);
+      }
+      this.searchWord = searchWord;
+    });
+
 
     if (!this.loggedInUser) {
       this.loggedInUser = localStorage.getItem('loggedInUser') || '';
@@ -48,8 +60,8 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  ngOnChanges(): void {
-    this.storage.loggedUser.subscribe(user => this.loggedInUser = user);
-  }
+    public applyFilter( filter: string ) {
+      this.shiftDb = this.localStorageShifts.filter((shift: UserShift) => shift.shiftSlug.includes(filter));
+    }
 
 }

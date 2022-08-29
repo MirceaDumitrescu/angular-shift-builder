@@ -9,8 +9,8 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
 
-  loggedInUser: string;
-  isUserAdmin: boolean = false;
+  public loggedInUser: string;
+  public isUserAdmin: boolean = false;
 
   constructor(
     private storage: StorageService,
@@ -29,11 +29,6 @@ export class NavbarComponent implements OnInit {
     this.isUserAdmin = JSON.parse(localStorage.getItem('userIsAdmin') || 'false');
 
   }
-
-  ngOnChanges(): void {
-    this.storage.loggedUser.subscribe(user => this.loggedInUser = user);
-    this.storage.loggedUserIsAdmin.subscribe(value => this.isUserAdmin = value);
-  };
 
   public logout(): void {
     localStorage.removeItem('loggedInUser');

@@ -3,7 +3,7 @@
 <mat-form-field >
   <input
     matInput
-    (keyup)="applyFilter($event)"
+    (input)="applyFilter($event)"
     placeholder="Search by shift name"
     class='search-bar'
     [(ngModel)]="searchTerm"

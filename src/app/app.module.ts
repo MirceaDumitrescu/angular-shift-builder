@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AuthService } from './Services/auth.service';
 import { AuthGuardService } from './Services/auth-guard.service';
 import { EncrDecrService } from './Services/encr-decr.service';
+import { SearchFiltersService } from './Services/search-filters.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -74,7 +75,7 @@ import { ProfileComponent } from './Pages/profile/profile.component';
     MatNativeDateModule,
     FormsModule
   ],
-  providers: [StorageService, AuthService, AuthGuardService , EncrDecrService],
+  providers: [StorageService, AuthService, AuthGuardService , EncrDecrService, SearchFiltersService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
