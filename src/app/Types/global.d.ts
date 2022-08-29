@@ -21,5 +21,6 @@ declare global {
         hourlyRate: number,
         workplace: string,
         shiftDescription: string,
+        totalEarnings: number
       };
 }

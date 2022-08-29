@@ -6,6 +6,8 @@ import { AuthGuardService } from './Services/auth-guard.service';
 import { EncrDecrService } from './Services/encr-decr.service';
 import { SearchFiltersService } from './Services/search-filters.service';
 
+import { dateConversion } from './Pipes/dateConvert';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './Pages/home/home.component';
@@ -53,7 +55,8 @@ import { ProfileComponent } from './Pages/profile/profile.component';
     ErrorPageComponent,
     FooterComponent,
     SearchBarComponent,
-    ProfileComponent
+    ProfileComponent,
+    dateConversion
   ],
   imports: [
     BrowserModule,

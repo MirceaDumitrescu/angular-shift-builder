@@ -13,6 +13,14 @@ export class AddShiftComponent implements OnInit {
   private shiftDb: any;
   private loggedInUser: string;
   public error: string = "";
+  public workplaces: any = [
+     { id: 1,
+      name: "Office"},
+      { id: 2,
+      name: "Remote"},
+      { id: 3,
+      name: "Other"}
+  ]
 
   public shiftForm: FormGroup;
 
@@ -21,13 +29,12 @@ export class AddShiftComponent implements OnInit {
   private getUserData(user: string) {
     this.userData = this.storageService.getLocalStorageUserData(user);
   }
+  private setShiftData(data: UserShift) {
+    this.storageService.setLocalStorageUserShifts(data);
+  }
 
   private getShiftData() {
     this.shiftDb = this.storageService.getLocalStorageUserShifts();
-  }
-
-  private setShiftData(data: UserShift) {
-    this.storageService.setLocalStorageUserShifts(data);
   }
 
   constructor(
@@ -45,14 +52,13 @@ export class AddShiftComponent implements OnInit {
     }
 
     this.getUserData(this.loggedInUser);
-    this.getShiftData();
 
     this.shiftForm = this.fb.group({
       user: [this.loggedInUser],
       shiftSlug: ["", [Validators.required, Validators.minLength(3)]],
       shiftStartTime: ["", [Validators.required]],
       shiftEndTime: ["", [Validators.required]],
-      shiftDate: [this.today],
+      shiftDate: [""],
       hourlyRate: ["", [Validators.required, Validators.min(0), Validators.pattern("^[0-9]*$")]],
       workplace: ["", [Validators.required, Validators.minLength(3)]],
       shiftDescription: ["", [Validators.required, Validators.minLength(10)]],
@@ -84,13 +90,21 @@ export class AddShiftComponent implements OnInit {
   submitHandler() {
     const form = this.shiftForm.value;
 
+    form.shiftDate = form.shiftStartTime;
+
+    this.getShiftData();
+
     if (!this.shiftDb) {
-      this.shiftDb = JSON.parse(localStorage.getItem("shifts") || "");
+      alert("No shifts found");
+      localStorage.setItem("shifts", JSON.stringify([]));
+      this.shiftDb = JSON.parse(localStorage.getItem("shifts") || "[]");
     }
 
     //check if the shift interval overlaps an existing shift
     const startingDate = new Date(form.shiftStartTime);
     const endingDate = new Date(form.shiftEndTime);
+
+    if ( Object.keys(this.shiftDb).length > 0) {
 
     const overlappingShift = this.shiftDb.find((shift: UserShift) => {
       const shiftInterval = {
@@ -119,6 +133,7 @@ export class AddShiftComponent implements OnInit {
       )}`;
       return;
     }
+  }
 
     this.shiftDb.push(form);
     this.setShiftData(this.shiftDb);

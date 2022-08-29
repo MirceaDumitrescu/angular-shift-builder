@@ -10,7 +10,7 @@ export class StorageService {
   private adminsArray: string[] = ['mirceagab@gmail.com'];
 
   private localStorageUserData: UserData;
-  private localStorageShiftData: UserShift;
+  private localStorageShiftData: any = JSON.parse(localStorage.getItem('shifts') || '[]');
   private userIsAdmin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private userAuthData = new BehaviorSubject<string>('');
   loggedUser = this.userAuthData.asObservable();

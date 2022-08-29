@@ -1,6 +1,5 @@
 <section class="home">
   <app-search-bar></app-search-bar>
-  {{ searchWord }}
   <table>
     <thead>
         <th>User</th>
@@ -9,18 +8,19 @@
         <th>Hourly Rate</th>
         <th>Description</th>
         <th>Date Added</th>
-        <th>Hours Worked</th>
+        <th>Total Earnings</th>
     </thead>
     <tbody>
         <tr *ngFor="let shift of shiftDb">
             <td>{{shift.user}}</td>
             <td>{{shift.shiftSlug}}</td>
             <td>{{shift.workplace}}</td>
-            <td>{{shift.hourlyRate}}</td>
+            <td>{{shift.hourlyRate}} $ / hour</td>
             <td>{{shift.shiftDescription}}</td>
-            <td>{{shift.shiftDate}}</td>
-            <td>8 hours</td>
+            <td>{{shift.shiftDate | dateConvert }}</td>
+            <td>{{shift.totalEarnings}} $</td>
         </tr>
     </tbody>
 </table>
+<p>Best month of this year: {{ bestMonthName }} with a total of {{ bestMonth }} $</p>
 </section>

@@ -2,7 +2,6 @@
     <div class="logo-website"><a routerLink="/">Shifter.</a></div>
     <div class="menu-links">
         <a *ngIf='loggedInUser' routerLink="/" class='menu-link'>Home</a>
-        <a *ngIf='isUserAdmin' routerLink="/dashboard" class='menu-link'>Dashboard</a>
         <a *ngIf='loggedInUser' routerLink="/profile" class='menu-link'>Profile</a>
         <a *ngIf='loggedInUser' routerLink="/add-shift" class='menu-link'>Add Shift</a>
         <a *ngIf='!loggedInUser' routerLink="/register" class='menu-link'>Register</a>

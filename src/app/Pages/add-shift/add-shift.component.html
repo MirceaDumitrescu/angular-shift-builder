@@ -42,13 +42,13 @@
     </mat-form-field>
 
     <mat-form-field class="shift-workplace-input">
-      <input
-        matInput
-        placeholder="shift-workplace"
-        formControlName="workplace"
-      />
+      <mat-select placeholder="workplace" formControlName="workplace">
+        <mat-option *ngFor="let workplace of workplaces" [value]="workplace.name">
+          {{ workplace.name }}
+        </mat-option>
+      </mat-select>
       <mat-error *ngIf="workplace?.invalid && workplace?.touched">
-        Shift workplace is <strong>required</strong>
+        Workplace is <strong>required</strong>
       </mat-error>
     </mat-form-field>
 

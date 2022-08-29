@@ -11,6 +11,8 @@ import Debounce from "debounce-decorator";
 export class HomeComponent implements OnInit {
   public searchWord: string;
   public shiftDb: any;
+  public bestMonth: number = 0;
+  public bestMonthName: string = "";
   private loggedInUser: string;
   private localStorageShifts: any;
   private isUserAdmin: boolean = false;
@@ -79,15 +81,43 @@ export class HomeComponent implements OnInit {
       shift.shiftSlug.includes(filter)
     );
 
-    if (dateRange.from && dateRange.to) {
+    // create the total earnings for each shift
+    data.forEach((shift: UserShift) => {
+      let startDate = new Date(shift.shiftStartTime);
+      let endDate = new Date(shift.shiftEndTime);
 
+      let totalDays = Math.round(
+        Math.abs(endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24)
+      );
+      let totalEarnings = totalDays * 8 * shift.hourlyRate;
+      shift.totalEarnings = totalEarnings;
+    });
+
+    // calculate and check which is the best earning month for the user
+    const monthCalculations: any = {};
+    data.forEach((shift: UserShift) => {
+      let shiftDate = new Date(shift.shiftDate);
+      let monthName = shiftDate.toLocaleString("default", { month: "long" });
+      let monthEarnings: number = shift.totalEarnings;
+
+      if (!monthCalculations[monthName]) {
+        monthCalculations[monthName] = 0;
+      }
+
+      monthCalculations[monthName] += monthEarnings;
+
+      if (monthCalculations[monthName] > this.bestMonth) {
+        this.bestMonthName = monthName;
+        this.bestMonth = monthCalculations[monthName];
+      }
+    });
+
+    if (dateRange && dateRange.from && dateRange.to) {
       this.shiftDb = data.filter((shift: UserShift) => {
         const interval = {
           from: new Date(shift.shiftStartTime),
           to: new Date(shift.shiftEndTime),
         };
-
-        console.log(interval.from >= dateRange.from)
 
         if (interval.from >= dateRange.from && interval.to <= dateRange.to) {
           return true;
