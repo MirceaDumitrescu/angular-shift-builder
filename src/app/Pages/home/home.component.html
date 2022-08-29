@@ -1,3 +1,25 @@
 <section class="home">
-    <app-search-bar></app-search-bar>
+  <app-search-bar></app-search-bar>
+  <table>
+    <thead>
+        <th>User</th>
+        <th>Shift Slug</th>
+        <th>Workspace</th>
+        <th>Hourly Rate</th>
+        <th>Description</th>
+        <th>Date Added</th>
+        <th>Hours Worked</th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let shift of shiftDb">
+            <td>{{shift.user}}</td>
+            <td>{{shift.shiftSlug}}</td>
+            <td>{{shift.workplace}}</td>
+            <td>{{shift.hourlyRate}}</td>
+            <td>{{shift.shiftDescription}}</td>
+            <td>{{shift.shiftDate}}</td>
+            <td>8 hours</td>
+        </tr>
+    </tbody>
+</table>
 </section>

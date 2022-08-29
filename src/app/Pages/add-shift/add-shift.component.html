@@ -1,1 +1,74 @@
-<p>add-shift works!</p>
+<section class="add-shift">
+  <form
+    action=""
+    class="shift-form"
+    [formGroup]="shiftForm"
+    (ngSubmit)="submitHandler()"
+  >
+    <mat-form-field appearance="fill">
+      <mat-label>Enter a date range</mat-label>
+      <mat-date-range-input [rangePicker]="picker">
+        <input
+          matStartDate
+          placeholder="Start date"
+          formControlName="shiftStartTime"
+        />
+        <input
+          matEndDate
+          placeholder="End date"
+          formControlName="shiftEndTime"
+        />
+      </mat-date-range-input>
+      <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+      <mat-error *ngIf="shiftStartTime?.invalid && shiftStartTime?.touched">
+        Shift name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="shift-slug-input">
+      <input matInput placeholder="shift-slug" formControlName="shiftSlug" />
+      <mat-error *ngIf="shiftSlug?.invalid && shiftSlug?.touched">
+        Shift name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="shift-rate-input">
+      <input matInput placeholder="shift-rate" formControlName="hourlyRate" />
+      <mat-error *ngIf="hourlyRate?.invalid && hourlyRate?.touched">
+        Shift rate is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="shift-workplace-input">
+      <input
+        matInput
+        placeholder="shift-workplace"
+        formControlName="workplace"
+      />
+      <mat-error *ngIf="workplace?.invalid && workplace?.touched">
+        Shift workplace is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="shift-comments-input">
+      <textarea
+        matInput
+        placeholder="shift-comments"
+        formControlName="shiftDescription"
+      ></textarea>
+      <mat-error *ngIf="shiftDescription?.invalid && shiftDescription?.touched">
+        Shift description is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!shiftForm.valid"
+    >
+      Register
+    </button>
+  </form>
+</section>

@@ -7,10 +7,14 @@ import { BehaviorSubject } from 'rxjs';
 
 export class StorageService {
 
+  private adminsArray: string[] = ['mirceagab@gmail.com'];
+
   private localStorageUserData: UserData;
   private localStorageShiftData: UserShift;
+  private userIsAdmin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private userAuthData = new BehaviorSubject<string>('');
   loggedUser = this.userAuthData.asObservable();
+  loggedUserIsAdmin = this.userIsAdmin.asObservable();
 
 
   public getLocalStorageUserData(user: string):UserData {
@@ -27,12 +31,19 @@ export class StorageService {
     return this.localStorageShiftData;
   }
 
-  public setLocalStorageUserShifts(user: string, data: UserShift):void {
+  public setLocalStorageUserShifts(data: UserShift):void {
     this.localStorageShiftData = data;
-    localStorage.setItem(user, JSON.stringify(data));
+    localStorage.setItem('shifts', JSON.stringify(data));
   }
 
   public setLoggedInUser(user: string):void {
+
+    if (this.adminsArray.includes(user)) {
+      this.userIsAdmin.next(true);
+      localStorage.setItem('userIsAdmin', 'true');
+    }
+
+
     this.userAuthData.next(user);
     localStorage.setItem('loggedInUser', user);
   }

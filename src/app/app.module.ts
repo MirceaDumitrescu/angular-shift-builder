@@ -37,6 +37,7 @@ import { ErrorPageComponent } from './Pages/error-page/error-page.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FooterComponent } from './Components/footer/footer.component';
 import { SearchBarComponent } from './Components/search-bar/search-bar.component';
+import { ProfileComponent } from './Pages/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { SearchBarComponent } from './Components/search-bar/search-bar.component
     ForgotPasswordComponent,
     ErrorPageComponent,
     FooterComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

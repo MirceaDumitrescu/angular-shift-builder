@@ -13,12 +13,13 @@ declare global {
       };
 
       type UserShift = {
-        shiftId: string,
-        shiftDate: string,
-        shiftStart: string,
-        shiftEnd: string,
+        user: string,
+        shiftSlug: string,
+        shiftStartTime: Date,
+        shiftEndTime: Date,
+        shiftDate: Date,
         hourlyRate: number,
-        shiftHours: number,
-        shiftTotal: number,
+        workplace: string,
+        shiftDescription: string,
       };
 }
