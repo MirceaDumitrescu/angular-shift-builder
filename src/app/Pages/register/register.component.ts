@@ -62,7 +62,7 @@ export class RegisterComponent implements OnInit {
         ],
       ],
       phone: '',
-      age: '',
+      age: 0,
       role: '',
       firstName: '',
       lastName: '',
@@ -122,6 +122,7 @@ export class RegisterComponent implements OnInit {
         role: myForm.role,
         firstName: myForm.firstName,
         lastName: myForm.lastName,
+        age: myForm.age,
         shifts: [],
       }
     );

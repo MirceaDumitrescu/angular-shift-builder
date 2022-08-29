@@ -9,6 +9,7 @@ declare global {
         email: string,
         phone: string,
         role: string,
+        age: number,
         shifts: Array<any>
       };
 

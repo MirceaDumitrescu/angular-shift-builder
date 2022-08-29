@@ -1,1 +1,54 @@
-<p>profile works!</p>
+<form
+  action=""
+  class="profile-form__form"
+  [formGroup]="profileForm"
+  (ngSubmit)="updateProfile()"
+>
+<h3>Welcome {{ loggedInUser }}</h3>
+
+    <mat-form-field class="profile-input">
+        <input matInput placeholder="username" formControlName="username" />
+        <mat-error *ngIf="username?.invalid && username?.touched">
+        Name is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field class="profile-input">
+        <input matInput placeholder="email" formControlName="email" />
+        <mat-error *ngIf="email?.invalid && email?.touched">
+        Email is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field class="profile-input">
+        <input matInput placeholder="firstName" formControlName="firstName" />
+        <mat-error *ngIf="firstName?.invalid && firstName?.touched">
+        Firstname is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field class="profile-input">
+        <input matInput placeholder="lastName" formControlName="lastName" />
+        <mat-error *ngIf="lastName?.invalid && lastName?.touched">
+        Lastname is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field class="profile-input">
+        <input matInput placeholder="age" formControlName="age" />
+        <mat-error *ngIf="age?.invalid && age?.touched">
+        Age is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field class="profile-input">
+        <input matInput placeholder="phone" formControlName="phone" />
+        <mat-error *ngIf="phone?.invalid && phone?.touched">
+        Phone is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+    <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="!profileForm.valid"
+    >
+        Update Profile
+    </button>
+
+</form>
